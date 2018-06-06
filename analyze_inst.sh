@@ -10,9 +10,15 @@
 # institutes2.csv is for R processing, which currently does not do the
 # aggregation and reduction of users.
 #
+if [[ $# != 1 ]]  ;then
+  echo "Usage: analyze_inst.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+
 tempfile=$(mktemp --tmpdir)
 
-year=2017
+year=$1
 yearp1=$((year+1))
 
 output=institutes.csv
@@ -96,8 +102,8 @@ cat $output | grep -v Institute | \
 rm $output
 mv institutes3.csv $output
 
-# Use R to get the plots - creates Rplots.pdf using output
-Rscript institutes.R
+# Use R to get the plots labelled by $year
+Rscript institutes.R $year
 
 #rm $output
 

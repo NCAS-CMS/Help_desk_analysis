@@ -6,12 +6,18 @@
 # Find for each ticket the time to first response
 #
 #
+if [[ $# != 1 ]]  ;then
+  echo "Usage: response_time.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+
 tempfile=$(mktemp --tmpdir)
 
-year=2017
+year=$1
 yearp1=$((year+1))
 
-echo ticket,response_time_hrs > helpdesk_1st_response_time_2017.csv
+echo ticket,response_time_hrs > helpdesk_1st_response_time.csv
 
 #
 # oldvalue is overloaded. It is usually the comment number, butcan contain things like 'description.1'
@@ -31,11 +37,11 @@ order by ticket.id asc;
 .exit
 EOF
 
-cat $tempfile >> helpdesk_1st_response_time_2017.csv
+cat $tempfile >> helpdesk_1st_response_time.csv
 
 # Use R to get the plots - creates Rplots.pdf
-Rscript proc_response_time.R
+Rscript proc_response_time.R $year
 
-#rm helpdesk_1st_response_time_2017.csv
+#rm helpdesk_1st_response_time.csv
 
 rm $tempfile

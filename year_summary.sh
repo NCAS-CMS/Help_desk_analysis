@@ -7,12 +7,20 @@
 #
 # Use 'here' document for SQL so we can modify the year range
 #
+if [[ $# != 1 ]]  ;then
+  echo "Usage: year_summary.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+
+yearmax=$1
+
 tempfile=$(mktemp --tmpdir)
 
 # Header line
 echo Year,Tickets,Reporters > years.csv
 
-for ((year=2007; year<2018;year++))
+for ((year=2007; year<=yearmax;year++))
 do
   yearp1=$((year+1))
 

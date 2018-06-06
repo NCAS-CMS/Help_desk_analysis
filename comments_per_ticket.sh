@@ -6,7 +6,12 @@
 # Find for each ticket the number of comments
 #
 #
-year=2017
+if [[ $# != 1 ]]  ;then
+  echo "Usage: comments_per_ticket.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+year=$1
 yearp1=$((year+1))
 
 tempfile=$(mktemp --tmpdir)

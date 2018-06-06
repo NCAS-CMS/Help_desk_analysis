@@ -6,9 +6,15 @@
 # Find for each ticket the duration in days
 #
 #
+if [[ $# != 1 ]]  ;then
+  echo "Usage: ticket_duration.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+
 tempfile=$(mktemp --tmpdir)
 
-year=2017
+year=$1
 yearp1=$((year+1))
 
 output=ticket_change_duration_days.csv

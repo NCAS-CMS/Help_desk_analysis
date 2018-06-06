@@ -15,11 +15,9 @@ N=length(stats_in$Tickets)
 title=paste(sprintf("Histogram of responses per ticket, %d tickets\n",N))
 jpeg(filename="responses_per_ticket.jpeg")
 fred=hist(stats_in$Comments, main=title,xlab="responses")
-dev.off()
 
 #Plot log frequencies
 fred$counts[fred$counts<=0]=1 # prevent taking log of zero
 fred$counts=log10(fred$counts)
 jpeg(filename="responses_per_ticket_log.jpeg")
 plot(fred,main=title,xlab="responses", ylab="log10(Frequency)")
-dev.off()

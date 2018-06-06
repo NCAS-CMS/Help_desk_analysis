@@ -31,10 +31,7 @@ order by ticket_change.time;
 EOF
 
 cat $tempfile >> active_stagnant.csv
-cat active_stagnant.csv
 # Use R to get the plots - creates Rplots.pdf
 #Rscript proc_max_comments.R
-
-rm active_stagnant.csv
 
 rm $tempfile
