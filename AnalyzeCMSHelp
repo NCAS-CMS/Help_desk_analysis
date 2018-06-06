@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# W. McGinty
+# 6th June 2018
+#
+# Plot all the graphs
+#
+set -u
+
+if [[ $# != 1 ]]  ;then
+  echo "Usage: do_all.sh <year>" 1>&2
+  echo " where year is after 2006" 1>&2
+  exit 1
+fi
+
+year=$1
+
+analyze_inst.sh $year
+comments_per_ticket.sh $year
+month_summary.sh
+response_time.sh $year
+stagnant.sh
+ticket_duration.sh $year
+um_version.sh $year
+year_summary.sh $year
