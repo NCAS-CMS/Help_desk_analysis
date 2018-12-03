@@ -30,6 +30,7 @@ sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select ticket.id, ((ticket_change.time - ticket.time)/1e6)/3600.0
 from ticket, ticket_change
 where ticket.id = ticket_change.ticket and
+     type is not 'task' and
      ticket_change.oldvalue='1' and
      ticket.time >= strftime('%s','$year-01-01')*1e6 and
      ticket.time < strftime('%s','$yearp1-01-01')*1e6

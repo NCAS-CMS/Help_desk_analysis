@@ -24,6 +24,7 @@ sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select ticket, date(ticket_change.time/1e6,"unixepoch"),ticket.owner
 from ticket, ticket_change
  where ticket.id=ticket_change.ticket and ticket.status not like 'closed'
+  and type is not 'task'
   and ticket_change.time <=strftime('%s','$old')*1e6
 group by ticket_change.ticket
 order by ticket_change.time;

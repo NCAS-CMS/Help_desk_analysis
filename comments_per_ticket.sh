@@ -26,11 +26,13 @@ echo Tickets, Comments > max_comments_per_ticket2.csv
 # error if presented with a non-integer.
 #
 sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
-select ticket,max(cast(oldvalue as integer))
-from ticket_change
-where field="comment" and oldvalue not like 'descri%' and oldvalue not like '%.%' and
-        time >= strftime('%s','$year-01-01')*1e6 and
-        time < strftime('%s','$yearp1-01-01')*1e6
+select ticket_change.ticket,max(cast(oldvalue as integer))
+from ticket_change, ticket
+where ticket.id=ticket_change.ticket and
+        type is not 'task' and
+        field="comment" and oldvalue not like 'descri%' and oldvalue not like '%.%' and
+        ticket_change.time >= strftime('%s','$year-01-01')*1e6 and
+        ticket_change.time < strftime('%s','$yearp1-01-01')*1e6
 group by ticket;
 .exit
 EOF

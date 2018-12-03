@@ -27,7 +27,8 @@ do
   sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select count(*)
 from ticket
-where time >= strftime('%s','$year-01-01')*1e6 and
+where type is not 'task' and
+      time >= strftime('%s','$year-01-01')*1e6 and
       time < strftime('%s','$yearp1-01-01')*1e6;
 .exit
 EOF
@@ -37,7 +38,8 @@ EOF
   sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select reporter, count(*)
 from ticket
-where time >= strftime('%s','$year-01-01')*1e6 and
+where type is not 'task' and
+      time >= strftime('%s','$year-01-01')*1e6 and
       time < strftime('%s','$yearp1-01-01')*1e6
 group by reporter;
 .exit

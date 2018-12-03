@@ -41,6 +41,7 @@ sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select ticket.id, max(cast(oldvalue as integer)), ticket.reporter, session_attribute.value
 from ticket_change, ticket,session_attribute
 where   ticket_change.ticket=ticket.id and
+        type is not 'task' and
 	sid = ticket.reporter and session_attribute.value like '%@%' and
 	ticket.time >= strftime('%s','$year-01-01')*1e6 and
 	ticket.time < strftime('%s','$yearp1-01-01')*1e6

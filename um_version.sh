@@ -32,6 +32,7 @@ sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select ticket_custom.ticket, ticket_custom.value
 from ticket_custom, ticket
 where ticket_custom.ticket=ticket.id and
+     type is not 'task' and
      value is not '' and
      value not like '<select%' and
      value not in ('ARCHER','PUMA','MONSooN','Monsoon2','NEXCS','Other') and
