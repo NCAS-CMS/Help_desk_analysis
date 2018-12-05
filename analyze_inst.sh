@@ -4,7 +4,7 @@
 # 5th Dec 2017
 #
 # The aim is to collect the number of tickets, number of responses per
-# instituion.  Normalised by the number of users at an institution.
+# institution.  Normalised by the number of users at an institution.
 #
 # institutes.csv is the final answer
 # institutes2.csv is for R processing, which currently does not do the
@@ -41,7 +41,7 @@ sqlite3 -csv ~/Helpdesk/trac_latest.db > $tempfile <<EOF
 select ticket.id, max(cast(oldvalue as integer)), ticket.reporter, session_attribute.value
 from ticket_change, ticket,session_attribute
 where   ticket_change.ticket=ticket.id and
-        type is not 'task' and
+        type is not 'task' and reporter is not 'pmcguire' and
 	sid = ticket.reporter and session_attribute.value like '%@%' and
 	ticket.time >= strftime('%s','$year-01-01')*1e6 and
 	ticket.time < strftime('%s','$yearp1-01-01')*1e6
