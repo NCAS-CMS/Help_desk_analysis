@@ -66,3 +66,5 @@ EOF
 done
 
 rm $tempfile
+
+Rscript months.R
