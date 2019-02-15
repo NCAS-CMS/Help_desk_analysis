@@ -7,36 +7,26 @@
 #
 X11.options(type="Xlib") # fast plotting
 
-# input is Year, Month, Tickets
+# input is Date, Tickets where the Date is nominally the centre of the month
+#  This is so we can treat the whole thing as an ISO date.
 stats_in<-read.table("months.csv",sep=",",header=TRUE)
 
-stats_in$Year <- as.numeric(as.character(stats_in$Year), "%Y")
+statsDate <- as.Date(stats_in$Date, "%Y-%m-%d")
 
-stats_in$Month<-factor(as.character(stats_in$Month))
+statsTickets <-as.numeric(as.character(stats_in$Tickets))
 
-stats_in$Tickets <-as.numeric(as.character(stats_in$Tickets))
+N=length(stats_in$Date)
 
-# Remove tail end which has zero tickets - there are no months with zero tickets
-stats=stats_in[stats_in$Tickets>0,]
-
-N=length(stats$Year)
-
-days=rep(14,N)
-
-fred=as.character(paste(stats$Year, stats$Month, days,sep="-"))
-
-StatsDates=as.Date(as.character(fred),"%Y-%m-%d")
-pig=as.factor(format(StatsDates,"%b"))
-
+StatMonths=ordered(format(as.Date(stats_in$Date),"%b"),
+                   levels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))
+  
 title=paste(sprintf("CMS Help Tickets per month - colour by month\n"))
+
 #jpeg(filename="months_tkts.jpeg")
 
-plot(StatsDates,stats$Tickets,pch=16,col=stats_in$Month,xlab="Year",ylab="Tickets",main=title)
+plot(statsDate, statsTickets,pch=16,col=StatMonths,xlab="Year",ylab="Tickets",main=title)
 
-plot(stats$Tickets ~ stats$Month,xlab="Month", main="Tickets per month")
-
-#Hooray!
-plot(stats$Tickets ~ pig,xlab="Month", main="Tickets per month")
+plot(statsTickets ~ StatMonths,xlab="Month", main="Tickets per month")
 
 
      

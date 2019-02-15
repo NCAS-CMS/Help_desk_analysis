@@ -17,7 +17,7 @@ year=$1
 
 analyze_inst.sh $year
 comments_per_ticket.sh $year
-month_summary.sh
+month_summary.sh $year
 response_time.sh $year
 stagnant.sh
 ticket_duration.sh $year
