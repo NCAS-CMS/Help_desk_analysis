@@ -21,12 +21,13 @@ StatMonths=ordered(format(as.Date(stats_in$Date),"%b"),
                    levels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))
   
 title=paste(sprintf("CMS Help Tickets per month - colour by month\n"))
-
-#jpeg(filename="months_tkts.jpeg")
-
+jpeg(filename="months_tkts_allyrs_by_colour.jpeg",width=1096,height=555)
 plot(statsDate, statsTickets,pch=16,col=StatMonths,xlab="Year",ylab="Tickets",main=title)
+dev.off()
 
-plot(statsTickets ~ StatMonths,xlab="Month", main="Tickets per month")
-
+title=paste(sprintf("CMS Help Tickets per month - all years\n"))
+jpeg(filename="months_tkts_stats.jpeg",width=1096,height=555)
+plot(statsTickets ~ StatMonths,xlab="Month", main=title)
+dev.off()
 
      
